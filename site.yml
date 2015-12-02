@@ -1,0 +1,10 @@
+---
+- name: Common config
+  hosts: all
+  roles:
+    - common
+
+- name: Shibboleth SP
+  hosts: shibe
+  roles:
+    - shibd

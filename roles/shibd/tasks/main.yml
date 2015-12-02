@@ -1,0 +1,25 @@
+---
+
+- name: Install Apache2 + mod-shib2
+  apt: name={{item}} state=present
+  with_items:
+    - apache2
+    - libapache2-mod-shib2
+
+- name: Remove default Apache2 welcome site
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+- name: Remove default Apache2 welcome site files
+  file: path=/var/www/html state=absent
+
+- name: Enable mod-shib2
+  command: a2enmod shib2 creates=/etc/apache2/mods-enabled/shib2.load
+
+- name: Create "Private Site" configuration
+  template: src=private-site.conf.j2 dest=/etc/apache2/sites-available/100-private-site.conf
+
+- name: Enable "Private Site"
+  command: a2ensite 100-private-site creates=/etc/apache2/sites-enabled/100-private-site.conf
+
+- service: name=shibd state=restarted
+- service: name=apache2 state=restarted

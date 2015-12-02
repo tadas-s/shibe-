@@ -1,0 +1,13 @@
+---
+
+- name: Install common packages
+  apt: name={{item}} state=present
+  with_items:
+    - mc
+    - git
+    - multitail
+    - nmap
+    - htop
+
+- name: Create the hosts file for all machines
+  template: src=hosts.j2 dest=/etc/hosts
