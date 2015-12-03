@@ -21,5 +21,13 @@
 - name: Enable "Private Site"
   command: a2ensite 100-private-site creates=/etc/apache2/sites-enabled/100-private-site.conf
 
+- name: Private site folder
+  file: path={{ item }} state=directory owner={{ site_owner }} group={{ site_group }}
+  with_items:
+    - '/var/www/{{ site_domain }}'
+    - '/var/www/{{ site_domain }}/public_html'
+    - '/var/www/{{ site_domain }}/public_html/private'
+    - '/var/www/{{ site_domain }}/log'
+
 - service: name=shibd state=restarted
 - service: name=apache2 state=restarted
