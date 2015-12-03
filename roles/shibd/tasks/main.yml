@@ -15,6 +15,9 @@
 - name: Enable mod-shib2
   command: a2enmod shib2 creates=/etc/apache2/mods-enabled/shib2.load
 
+- name: Enable mod-ssl
+  command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.load
+
 - name: Create "Private Site" configuration
   template: src=private-site.conf.j2 dest=/etc/apache2/sites-available/100-private-site.conf
 
