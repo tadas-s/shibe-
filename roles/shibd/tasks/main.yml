@@ -36,6 +36,9 @@
   command: openssl req -new -nodes -x509 -subj "/C=GB/ST=London/L=London/O=IT/CN={{ site_domain }}" -days 365 -keyout "/etc/ssl/private/{{ site_domain }}.key" -out /etc/ssl/certs/{{ site_domain }}.crt -extensions v3_ca creates=/etc/ssl/certs/{{ site_domain }}.crt
 - file: path=/etc/ssl/private/{{ site_domain }}.key owner=root group=ssl-cert
 
+- name: generate SP key
+  command: shib-keygen creates=/etc/shibboleth/sp-key.pem
+
 - name: shibboleth2.xml config
   template: src=shibboleth2.xml.j2 dest=/etc/shibboleth/shibboleth2.xml
 
