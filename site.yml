@@ -8,4 +8,5 @@
   hosts: shibe
   roles:
     - shibd
-    - php
+    - ruby
+
