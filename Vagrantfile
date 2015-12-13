@@ -2,7 +2,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = 'ubuntu/trusty64'
   config.vm.synced_folder "#{ENV['HOME']}/bin", '/home/vagrant/bin'
   config.vm.provision 'shell', inline: <<-SHELL
-    /vagrant/provision.sh
+    /vagrant/infrastructure/provision.sh
   SHELL
 
   config.vm.provider 'virtualbox' do |vb|
