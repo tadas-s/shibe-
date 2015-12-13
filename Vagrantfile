@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
   SHELL
 
   config.vm.provider 'virtualbox' do |vb|
-    vb.memory = '1024'
+    vb.memory = '2048'
   end
 
   config.vm.define 'shibe' do |box|

@@ -4,6 +4,8 @@
   apt: name={{item}} state=present
   with_items:
     - apache2
+    - apache2-dev
+    - libcurl4-openssl-dev
     - libapache2-mod-shib2
 
 - name: Remove default Apache2 welcome site

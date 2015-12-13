@@ -7,3 +7,4 @@ site_domain: 'shibe.local'
 pg_superuser: 'admin'
 pg_superuser_password: 'somethingsomething123'
 
+passenger_version: '5.0.22'

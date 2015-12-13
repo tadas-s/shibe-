@@ -13,6 +13,18 @@
     - build-essential
 
 - name: Install bundler
-  # For some reason this does not work, so I'm using shell instead
-  # gem: name=bundler state=latest user_install=no
-  shell: gem install bundler
+  gem: name=bundler state=latest user_install=no
+
+- name: Install passenger
+  gem: name=passenger state=latest user_install=no
+
+- name: Compile mod_passenger
+  command: passenger-install-apache2-module --auto --languages=ruby creates="/var/lib/gems/2.2.0/gems/passenger-{{ passenger_version }}/buildout/apache2/mod_passenger.so"
+
+- name: Install mod_passenger.load
+  template: src=mod_passenger.load.j2 dest=/etc/apache2/mods-available/mod_passenger.load
+
+- name: Enable mod_passenger
+  command: a2enmod mod_passenger creates=/etc/apache2/mods-enabled/mod_passenger.load
+
+- service: name=apache2 state=restarted
