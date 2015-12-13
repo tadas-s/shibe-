@@ -8,5 +8,5 @@
   hosts: shibe
   roles:
     - shibd
+    - postgres_server
     - ruby
-

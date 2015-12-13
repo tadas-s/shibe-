@@ -3,3 +3,7 @@
 site_owner: 'vagrant'
 site_group: 'vagrant'
 site_domain: 'shibe.local'
+
+pg_superuser: 'admin'
+pg_superuser_password: 'somethingsomething123'
+
