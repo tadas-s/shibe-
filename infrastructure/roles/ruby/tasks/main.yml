@@ -10,6 +10,7 @@
     - ruby2.2-dev
     - ruby-switch
     - zlib1g-dev
+    - build-essential
 
 - name: Install bundler
   # For some reason this does not work, so I'm using shell instead
