@@ -1,0 +1,23 @@
+---
+
+- name: Do not use port 80
+  lineinfile: dest=/etc/apache2/ports.conf
+    backup=yes
+    regexp='^Listen 80'
+    line="#Listen 80"
+    state=present
+
+- name: Create Shibe configuration
+  template: src=shibe.conf.j2 dest=/etc/apache2/sites-available/100-shibe.conf
+
+- name: Enable Shibe
+  command: a2ensite 100-shibe creates=/etc/apache2/sites-enabled/100-shibe.conf
+
+- name: Private site folder
+  file: path={{ item }} state=directory owner={{ site_owner }} group={{ site_group }}
+  with_items:
+    - '/var/www/{{ site_domain }}'
+    - '/var/www/{{ site_domain }}/public'
+    - '/var/www/{{ site_domain }}/log'
+
+- service: name=apache2 state=restarted

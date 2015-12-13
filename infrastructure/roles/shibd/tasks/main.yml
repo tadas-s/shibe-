@@ -20,20 +20,6 @@
 - name: Enable mod-ssl
   command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.load
 
-- name: Create "Private Site" configuration
-  template: src=private-site.conf.j2 dest=/etc/apache2/sites-available/100-private-site.conf
-
-- name: Enable "Private Site"
-  command: a2ensite 100-private-site creates=/etc/apache2/sites-enabled/100-private-site.conf
-
-- name: Private site folder
-  file: path={{ item }} state=directory owner={{ site_owner }} group={{ site_group }}
-  with_items:
-    - '/var/www/{{ site_domain }}'
-    - '/var/www/{{ site_domain }}/public_html'
-    - '/var/www/{{ site_domain }}/public_html/private'
-    - '/var/www/{{ site_domain }}/log'
-
 - name: Create self-signed certificate
   command: openssl req -new -nodes -x509 -subj "/C=GB/ST=London/L=London/O=IT/CN={{ site_domain }}" -days 365 -keyout "/etc/ssl/private/{{ site_domain }}.key" -out /etc/ssl/certs/{{ site_domain }}.crt -extensions v3_ca creates=/etc/ssl/certs/{{ site_domain }}.crt
 - file: path=/etc/ssl/private/{{ site_domain }}.key owner=root group=ssl-cert
