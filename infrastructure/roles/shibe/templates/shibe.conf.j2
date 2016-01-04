@@ -20,10 +20,11 @@
             Options -MultiViews
         </Directory>
 
-        #<Directory /var/www/{{ site_domain }}/public_html/private>
-        #    AuthType shibboleth
-        #    ShibRequestSetting requireSession 1
-        #    Require valid-user
-        #</Directory>
+        # Secure the omniauth-shibboleth callback path
+        <Location /auth/shibboleth/callback>
+            AuthType shibboleth
+            ShibRequestSetting requireSession 1
+            Require valid-user
+        </Location>
     </VirtualHost>
 </IfModule>
