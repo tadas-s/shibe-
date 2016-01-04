@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd /vagrant/infrastructure
+cd /var/www/shibe.local/infrastructure
 
 if [ ! -x "/usr/bin/ansible" ]; then
     echo "Will install Ansible..."

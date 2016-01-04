@@ -1,8 +1,10 @@
 Vagrant.configure(2) do |config|
   config.vm.box = 'ubuntu/trusty64'
   config.vm.synced_folder "#{ENV['HOME']}/bin", '/home/vagrant/bin'
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/var/www/shibe.local'
   config.vm.provision 'shell', inline: <<-SHELL
-    /vagrant/infrastructure/provision.sh
+    /var/www/shibe.local/infrastructure/provision.sh
   SHELL
 
   config.vm.provider 'virtualbox' do |vb|
