@@ -9,8 +9,34 @@
 - name: Private site folder
   file: path={{ item }} state=directory owner={{ site_owner }} group={{ site_group }}
   with_items:
-    - '/var/www/{{ site_domain }}'
-    - '/var/www/{{ site_domain }}/public'
-    - '/var/www/{{ site_domain }}/log'
+    - '{{ site_root }}'
+    - '{{ site_root }}/public'
+    - '{{ site_root }}/log'
+
+- name: Create PostgreSQL user
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user:
+    name="{{ site_owner }}"
+    password="asdf1234"
+    role_attr_flags="LOGIN"
+
+- name: Create PostgreSQL user/database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db:
+    name="shibe_{{ app_environment }}"
+    owner="{{ site_owner }}"
+
+- name: Create PostgreSQL test database
+  sudo: yes
+  sudo_user: postgres
+  when: app_environment == "development"
+  postgresql_db:
+    name="shibe_test"
+    owner="{{ site_owner }}"
+
+- name: bundle install
+  command: bundle install chdir="{{ site_root }}"
 
 - service: name=apache2 state=restarted

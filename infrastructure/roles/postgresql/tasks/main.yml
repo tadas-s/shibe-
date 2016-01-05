@@ -4,10 +4,12 @@
   apt: name={{ item }} state=present
   with_items:
     - postgresql-9.3
+    - postgresql-client
 
 - name: Install pg_hba.conf
   template: src=pg_hba.conf.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf owner=postgres group=postgres mode=0640 backup=yes
 
+# TODO: most likely not required
 - name: Enable local access
   lineinfile: dest=/etc/postgresql/9.3/main/postgresql.conf
     backup=yes
@@ -19,9 +21,3 @@
   service:
     name: postgresql
     state: restarted
-
-- name: Create superuser
-  postgresql_user:
-    name={{ pg_superuser }}
-    password={{ pg_superuser_password }}
-    role_attr_flags=CREATEDB,SUPERUSER,LOGIN

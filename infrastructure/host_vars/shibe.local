@@ -1,0 +1,7 @@
+---
+
+site_owner: 'vagrant'
+site_group: 'vagrant'
+site_domain: 'shibe.local'
+
+app_environment: 'development'

@@ -1,10 +1,13 @@
 ---
+app_environment: 'production'
 
-site_owner: 'vagrant'
-site_group: 'vagrant'
-site_domain: 'shibe.local'
+site_owner: 'refme'
+site_group: 'refme'
+
+site_root: '/var/www/{{ site_domain }}'
 
 pg_superuser: 'admin'
 pg_superuser_password: 'somethingsomething123'
 
 passenger_version: '5.0.22'
+passenger_app_environment: '{{ app_environment }}'

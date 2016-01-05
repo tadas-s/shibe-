@@ -6,7 +6,7 @@
         DocumentRoot /var/www/{{ site_domain }}/public
 
         PassengerRuby /usr/bin/ruby2.2
-        PassengerAppEnv development
+        PassengerAppEnv {{ passenger_app_environment }}
 
         ErrorLog /var/www/{{ site_domain }}/log/ssl-error.log
         CustomLog /var/www/{{ site_domain }}/log/ssl-access.log combined
