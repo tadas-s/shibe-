@@ -1,0 +1,26 @@
+---
+
+- name: Install Apache2
+  apt: name={{item}} state=present
+  with_items:
+    - apache2
+    - apache2-dev
+    - libcurl4-openssl-dev
+
+- name: Remove default Apache2 welcome site
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+- name: Remove default Apache2 welcome site files
+  file: path=/var/www/html state=absent
+
+- name: Enable mod-ssl
+  command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.load
+
+- name: Do not use port 80
+  lineinfile: dest=/etc/apache2/ports.conf
+    backup=yes
+    regexp='^Listen 80'
+    line="#Listen 80"
+    state=present
+
+- service: name=apache2 state=restarted

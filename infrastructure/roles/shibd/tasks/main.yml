@@ -1,24 +1,12 @@
 ---
 
-- name: Install Apache2 + mod-shib2
+- name: Install mod-shib2
   apt: name={{item}} state=present
   with_items:
-    - apache2
-    - apache2-dev
-    - libcurl4-openssl-dev
     - libapache2-mod-shib2
-
-- name: Remove default Apache2 welcome site
-  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
-
-- name: Remove default Apache2 welcome site files
-  file: path=/var/www/html state=absent
 
 - name: Enable mod-shib2
   command: a2enmod shib2 creates=/etc/apache2/mods-enabled/shib2.load
-
-- name: Enable mod-ssl
-  command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.load
 
 - name: Create self-signed certificate
   command: openssl req -new -nodes -x509 -subj "/C=GB/ST=London/L=London/O=IT/CN={{ site_domain }}" -days 365 -keyout "/etc/ssl/private/{{ site_domain }}.key" -out /etc/ssl/certs/{{ site_domain }}.crt -extensions v3_ca creates=/etc/ssl/certs/{{ site_domain }}.crt
