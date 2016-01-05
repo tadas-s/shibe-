@@ -3,6 +3,7 @@
 <IfModule mod_ssl.c>
     <VirtualHost _default_:443>
         ServerAdmin {{ site_owner }}@localhost
+        ServerName {{ site_domain }}
         DocumentRoot /var/www/{{ site_domain }}/public
 
         PassengerRuby /usr/bin/ruby2.2
