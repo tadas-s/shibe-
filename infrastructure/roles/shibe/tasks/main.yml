@@ -36,6 +36,13 @@
     owner="{{ site_owner }}"
 
 - name: bundle install
+  sudo: yes
+  sudo_user: "{{ site_owner }}"
   command: bundle install chdir="{{ site_root }}"
+
+- name: rake db:migrate
+  sudo: yes
+  sudo_user: "{{ site_owner }}"
+  command: rake db:migrate chdir="{{ site_root }}"
 
 - service: name=apache2 state=restarted
